@@ -1,5 +1,13 @@
 # ソフトウェア審査自動化システム
 
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+オープンソースソフトウェア（OSS）の審査を自動化するツールです。  
+脆弱性情報と開発活動の活発さを自動でチェックし、導入判断をサポートします。
+
+
 オープンソースソフトウェア（OSS）の審査を自動化するツールです。  
 脆弱性情報と開発活動の活発さを自動でチェックし、導入判断をサポートします。
 
