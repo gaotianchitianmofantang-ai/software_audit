@@ -1,0 +1,71 @@
+================================================================================
+ソフトウェア審査レポート
+================================================================================
+対象ソフトウェア: Docker
+審査実施日時: 2026年02月12日 12:19:11
+審査担当: takahatat250
+================================================================================
+
+
+■ 1. JVNDBチェック
+----------------------------------------
+[INFO] JVNDBに問い合わせ中: Docker
+
+======================================================================
+JVNDBチェック結果
+======================================================================
+対象ソフトウェア: Docker
+確認期間: 2021-02-13 ～ 2026-02-12
+検出された脆弱性: 0件
+判定: ✅ 合格(脆弱性なし)
+======================================================================
+
+
+■ 2. 更新頻度チェック
+----------------------------------------
+Following Github server redirection from /repos/docker/docker-ce to /repositories/91851756
+Traceback (most recent call last):
+  File "/home/takahatat250/software_audit/check_updates.py", line 135, in check_github_updates
+    for i, commit in enumerate(commits[:5], 1):
+  File "/home/takahatat250/software_audit/venv/lib/python3.12/site-packages/github/PaginatedList.py", line 124, in __iter__
+    yield self.__list[index]  # type: ignore
+          ~~~~~~~~~~~^^^^^^^
+  File "/home/takahatat250/software_audit/venv/lib/python3.12/site-packages/github/PaginatedList.py", line 91, in __getitem__
+    return self.__elements[index]
+           ~~~~~~~~~~~~~~~^^^^^^^
+IndexError: list index out of range
+[INFO] GitHub Token使用中（認証済み）
+[INFO] GitHub API残りリクエスト数: 4897
+
+======================================================================
+更新頻度チェック結果
+======================================================================
+対象リポジトリ: docker/docker-ce
+URL: https://github.com/docker/docker-ce
+確認期間: 直近12ヶ月
+基準日: 2025-02-12
+最終更新日: 2026-02-10 22:23:25+00:00
+最終コミット日: N/A
+コミット数（12ヶ月）: 0件
+リリース数（12ヶ月）: 0件
+判定: ❌ 不合格
+
+説明: リポジトリの更新が少ない、または停滞しています。
+  - コミット数が少ない（0件 < 12件/年）
+  - リリースがない（0件）
+
+【リポジトリ情報】
+説明: :warning: This repository is deprecated and will be archived (Docker CE itself is NOT deprecated) see the https://github.com/docker/docker-ce/blob/master/README.md :warning:
+スター数: 5768
+フォーク数: 1519
+ウォッチャー数: 5768
+作成日: 2017-05-19
+主要言語: Go
+
+【最近のコミット】（最新5件）
+
+❌ エラー: IndexError - list index out of range
+
+================================================================================
+総合判定: ❌ 不合格
+================================================================================

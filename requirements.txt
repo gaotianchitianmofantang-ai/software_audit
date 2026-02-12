@@ -1,0 +1,14 @@
+# HTTP通信ライブラリ
+requests==2.31.0
+
+# GitHub API クライアント
+PyGithub==2.8.1
+
+# 依存パッケージ（自動インストールされますが明示）
+urllib3>=1.26.0
+certifi>=2023.0.0
+charset-normalizer>=2.0.0
+idna>=3.0
+pyjwt[crypto]>=2.8.0
+pynacl>=1.5.0
+typing-extensions>=4.0.0

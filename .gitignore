@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+
+# ログファイル
+logs/*.log
+
+# レポート（必要に応じて）
+# audit_reports/*.txt
+
+# 環境変数
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Archive
+archive/

@@ -1,0 +1,5 @@
+# ソフトウェアリスト（CSV形式）
+# 形式: ソフトウェア名,GitHubリポジトリURL
+name,repo_url
+Apache HTTP Server,https://github.com/apache/httpd
+Node.js,https://github.com/nodejs/node

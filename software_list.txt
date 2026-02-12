@@ -1,0 +1,13 @@
+# ソフトウェアリスト（CSV形式）
+# 形式: ソフトウェア名,GitHubリポジトリURL
+name,repo_url
+Apache HTTP Server,https://github.com/apache/httpd
+Node.js,https://github.com/nodejs/node
+Python,https://github.com/python/cpython
+PostgreSQL,https://github.com/postgres/postgres
+MySQL,https://github.com/mysql/mysql-server
+Redis,https://github.com/redis/redis
+Nginx,https://github.com/nginx/nginx
+Docker,https://github.com/docker/docker-ce
+Kubernetes,https://github.com/kubernetes/kubernetes
+Git,https://github.com/git/git
