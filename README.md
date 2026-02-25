@@ -39,3 +39,6 @@ cat > README.md << 'EOFREADME'
 
 
 
+
+## 更新履歴
+- 2026-02-25: プロジェクトをGitHubに公開
