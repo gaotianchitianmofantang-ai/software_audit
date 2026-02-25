@@ -24,5 +24,26 @@ logs/*.log
 *.swo
 *~
 
-# Archive
+# 一時ファイル
+nul
+*.save
+=*
+
+# ログとレポート
+audit_reports/
+audit_results/
+reports/
+logs/
+
+# 一時分析
+tmp_analysis/
+
+# CSVデータ（機密の可能性）
+csv_data/
+
+# 審査ディレクトリ
+審査中/
+審査済み/
+
+# アーカイブ
 archive/

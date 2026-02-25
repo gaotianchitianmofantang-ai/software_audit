@@ -1,64 +1,54 @@
 #!/bin/bash
-
-# 複数ソフトウェアのバッチ審査
-# 使用方法: ./batch_audit.sh software_list.txt
+# ソフトウェアセキュリティ審査バッチ処理
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-SOFTWARE_LIST="${1:-software_list.txt}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CSV_DIR="${SCRIPT_DIR}/csv_data"
+LOG_DIR="${SCRIPT_DIR}/logs"
 
-if [ ! -f "$SOFTWARE_LIST" ]; then
-    echo "❌ エラー: $SOFTWARE_LIST が見つかりません"
-    echo "使用方法: ./batch_audit.sh <ソフトウェアリストファイル>"
-    exit 1
-fi
+mkdir -p "${LOG_DIR}"
 
-echo "========================================================================"
-echo "バッチ審査開始: $(date '+%Y-%m-%d %H:%M:%S')"
-echo "========================================================================"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+LOG_FILE="${LOG_DIR}/batch_audit_${TIMESTAMP}.log"
 
-total=0
-passed=0
-failed=0
+echo "=====================================" | tee -a "${LOG_FILE}"
+echo "ソフトウェアセキュリティ審査バッチ" | tee -a "${LOG_FILE}"
+echo "実行日時: $(date '+%Y年%m月%d日 %H:%M:%S')" | tee -a "${LOG_FILE}"
+echo "=====================================" | tee -a "${LOG_FILE}"
+echo "" | tee -a "${LOG_FILE}"
 
-while IFS=',' read -r name repo_url; do
-    # コメント行とヘッダーをスキップ
-    if [[ "$name" =~ ^#.*$ ]] || [[ "$name" == "name" ]]; then
-        continue
+# CSVファイルを順次処理
+csv_count=0
+success_count=0
+error_count=0
+
+for csv_file in "${CSV_DIR}"/*.csv; do
+    if [ ! -f "${csv_file}" ]; then
+        echo "CSVファイルが見つかりません: ${CSV_DIR}" | tee -a "${LOG_FILE}"
+        exit 1
     fi
     
-    # 空行をスキップ
-    if [ -z "$name" ]; then
-        continue
-    fi
+    csv_count=$((csv_count + 1))
+    echo "[${csv_count}] 処理中: $(basename "${csv_file}")" | tee -a "${LOG_FILE}"
     
-    total=$((total + 1))
-    
-    echo ""
-    echo "[$total] 審査中: $name"
-    echo "----------------------------------------"
-    
-    if "$SCRIPT_DIR/software_audit.sh" "$name" "$repo_url"; then
-        passed=$((passed + 1))
-        echo "  ✅ 合格"
+    if python3 "${SCRIPT_DIR}/auto_audit.py" "${csv_file}" >> "${LOG_FILE}" 2>&1; then
+        success_count=$((success_count + 1))
+        echo "  ✅ 成功" | tee -a "${LOG_FILE}"
     else
-        failed=$((failed + 1))
-        echo "  ❌ 不合格"
+        error_count=$((error_count + 1))
+        echo "  ❌ エラー" | tee -a "${LOG_FILE}"
     fi
     
-    # レート制限を避けるため、少し待機
-    sleep 2
-    
-done < "$SOFTWARE_LIST"
+    echo "" | tee -a "${LOG_FILE}"
+done
+
+echo "=====================================" | tee -a "${LOG_FILE}"
+echo "処理完了" | tee -a "${LOG_FILE}"
+echo "総数: ${csv_count}件" | tee -a "${LOG_FILE}"
+echo "成功: ${success_count}件" | tee -a "${LOG_FILE}"
+echo "エラー: ${error_count}件" | tee -a "${LOG_FILE}"
+echo "=====================================" | tee -a "${LOG_FILE}"
 
 echo ""
-echo "========================================================================"
-echo "バッチ審査完了: $(date '+%Y-%m-%d %H:%M:%S')"
-echo "========================================================================"
-echo "総数: $total 件"
-echo "合格: $passed 件 ✅"
-echo "不合格: $failed 件 ❌"
-echo "========================================================================"
-
-exit 0
+echo "ログファイル: ${LOG_FILE}"

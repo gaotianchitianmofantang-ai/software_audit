@@ -1,43 +1,10 @@
 #!/bin/bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# 現在のディレクトリを取得
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# 毎日午前9時に実行
+CRON_ENTRY="0 9 * * * cd ${SCRIPT_DIR} && source .env && ./batch_audit.sh"
 
-# cron設定を作成
-CRON_JOB="0 9 * * 1 cd $SCRIPT_DIR && source venv/bin/activate && ./batch_audit.sh software_list.txt >> logs/cron_$(date +\%Y\%m\%d).log 2>&1"
+# Cronに追加
+(crontab -l 2>/dev/null; echo "${CRON_ENTRY}") | crontab -
 
-# 現在のcronジョブを保存
-crontab -l > /tmp/current_cron 2>/dev/null || true
-
-# 既存のジョブをチェック
-if grep -q "batch_audit.sh" /tmp/current_cron 2>/dev/null; then
-    echo "⚠️  既にcronジョブが設定されています"
-    echo "現在の設定:"
-    grep "batch_audit.sh" /tmp/current_cron
-    echo ""
-    read -p "上書きしますか? (y/N): " confirm
-    if [ "$confirm" != "y" ] && [ "$confirm" != "Y" ]; then
-        echo "キャンセルしました"
-        exit 0
-    fi
-    # 既存のジョブを削除
-    grep -v "batch_audit.sh" /tmp/current_cron > /tmp/new_cron
-else
-    cp /tmp/current_cron /tmp/new_cron
-fi
-
-# 新しいジョブを追加
-echo "$CRON_JOB" >> /tmp/new_cron
-
-# cronに設定
-crontab /tmp/new_cron
-
-echo "✅ cronジョブを設定しました"
-echo "実行スケジュール: 毎週月曜日 午前9時"
-echo ""
-echo "確認: crontab -l"
-crontab -l | grep "batch_audit.sh"
-
-# クリーンアップ
-rm -f /tmp/current_cron /tmp/new_cron
-
+echo "Cron設定完了: 毎日午前9時に自動審査を実行します"

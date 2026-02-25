@@ -1,0 +1,3 @@
+
+requests,https://github.com/psf/requests,2.31.0,例外承認,2026-02-13
+Flask,https://github.com/pallets/flask,3.0.0,例外承認,2026-02-13
