@@ -47,3 +47,15 @@ csv_data/
 
 # アーカイブ
 archive/
+
+# 審査データ（機密情報を含む可能性）
+data/pending/*.csv
+data/approved/*.csv
+data/rejected/*.csv
+data/archive/*.csv
+reports/*.html
+reports/*.pdf
+
+# ただしサンプルファイルは除外しない
+!data/pending/sample.csv
+!data/approved/sample.csv
