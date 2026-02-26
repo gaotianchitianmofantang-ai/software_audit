@@ -1,0 +1,36 @@
+{
+  "auto_approve": {
+    "free_software": true,
+    "known_vendors": [
+      "Microsoft",
+      "Google",
+      "Apple",
+      "Mozilla",
+      "Python Software Foundation",
+      "Linux Foundation"
+    ],
+    "max_cost_yen": 10000
+  },
+  "auto_reject": {
+    "prohibited_categories": [
+      "P2P",
+      "暗号通貨マイニング"
+    ],
+    "high_risk_licenses": [
+      "不明",
+      "独自"
+    ]
+  },
+  "require_manual_review": {
+    "high_cost_threshold": 50000,
+    "sensitive_departments": [
+      "経理部",
+      "人事部"
+    ],
+    "security_keywords": [
+      "リモートアクセス",
+      "VPN",
+      "暗号化"
+    ]
+  }
+}
